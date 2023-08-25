@@ -1,34 +1,23 @@
 language: java
 jdk:
-  - openjdk17
+  - openjdk11
 
-# Cache Maven dependencies to speed up build
-cache:
-  directories:
-    - $HOME/.m2
-
-# Run tests
-script:
-  - mvn test -Dtest=de.bps.olat.portal.institution.InstitutionPortletTest -B
-
-# Setup postgresql and create the database (if needed)
 services:
   - postgresql
 
+before_install:
+  - psql -c 'create database olattest;' -U postgres
+
 before_script:
-  - psql -c "CREATE USER openolat WITH PASSWORD 'openolat';" -U postgres
-  - psql -c "CREATE DATABASE openolat;" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON DATABASE openolat TO openolat;" -U postgres
+  - export MAVEN_OPTS="-Xms512m -Xmx1024m"
+  - mvn compile -Pdocumentation,tomcat
 
-# Optionally, you might want to execute some database setup scripts here
+script:
+  - mvn clean test -Dwith-postgresql -Ptomcat
 
-# Specify any additional steps or configurations you need
+addons:
+  postgresql: "9.4"
 
-# Customize the install step if required
-# install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
-# Customize the notifications or other settings if required
-# notifications:
-#   email: ...
-
-# Optionally, you can deploy your application or artifacts here
+cache:
+  directories:
+    - $HOME/.m2
