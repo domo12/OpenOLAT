@@ -3,12 +3,15 @@ jdk:
   - openjdk17
 
 # Cache Maven dependencies to speed up build
-#cache:
-#  directories:
-#    - $HOME/.m2
+cache:
+  directories:
+    - $HOME/.m2
 
+# Run tests
+script:
+  - mvn test -Dtest=de.bps.olat.portal.institution.InstitutionPortletTest -B
 
-# Setup postgresql and create the database
+# Setup postgresql and create the database (if needed)
 services:
   - postgresql
 
@@ -16,9 +19,16 @@ before_script:
   - psql -c "CREATE USER openolat WITH PASSWORD 'openolat';" -U postgres
   - psql -c "CREATE DATABASE openolat;" -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE openolat TO openolat;" -U postgres
-  - psql -c "\c openolat openolat;" -U openolat
-  - psql -f src/main/resources/database/postgresql/setupDatabase.sql -U openolat
 
-# Commands to install dependencies and run tests
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: mvn test -B
+# Optionally, you might want to execute some database setup scripts here
+
+# Specify any additional steps or configurations you need
+
+# Customize the install step if required
+# install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+# Customize the notifications or other settings if required
+# notifications:
+#   email: ...
+
+# Optionally, you can deploy your application or artifacts here
