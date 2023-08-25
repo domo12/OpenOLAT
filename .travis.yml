@@ -3,9 +3,9 @@ jdk:
   - openjdk17
 
 # Cache Maven dependencies to speed up build
-cache:
-  directories:
-    - $HOME/.m2
+#cache:
+#  directories:
+#    - $HOME/.m2
 
 
 # Setup postgresql and create the database
