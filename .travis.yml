@@ -23,7 +23,6 @@ script:
 branches:
   only:
     - main  # Build only the 'main' branch
-    - develop  # Build the 'develop' branch as well, if applicable
 
 # Cache Gradle dependencies to speed up builds
 cache:
