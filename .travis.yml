@@ -1,22 +1,19 @@
 language: java
 jdk:
-  - openjdk17
+  - openjdk11
 
 services:
-  - postgresql
+  - mysql
 
 before_install:
-  - psql -c 'create database olattest;' -U postgres
+  - mysql -e 'CREATE DATABASE olattest;'
 
 before_script:
   - export MAVEN_OPTS="-Xms512m -Xmx1024m"
   - mvn compile -Pdocumentation,tomcat
 
 script:
-  - mvn clean test -Dwith-postgresql -Ptomcat
-
-addons:
-  postgresql: "9.4"
+  - mvn clean test -Dwith-mysql -Ptomcat
 
 cache:
   directories:
