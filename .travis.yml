@@ -30,5 +30,3 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-
-# Notifications, deployment, and other configurations can be added here
