@@ -1,23 +1,29 @@
 language: java
+
+# Choose the Java versions you want to test against
 jdk:
   - openjdk11
 
-services:
-  - postgresql
+# Specify the operating system you want to test on
+os: linux
 
+# Build script or commands to run before installing dependencies
 before_install:
-  - psql -c 'create database olattest;' -U postgres
+  - chmod +x gradlew  # Make gradlew script executable
 
-before_script:
-  - export MAVEN_OPTS="-Xms512m -Xmx1024m"
-  - mvn compile -Pdocumentation,tomcat
+# Install any dependencies or tools required for the build
+install:
+  - ./gradlew assemble
 
+# Run tests
 script:
-  - mvn clean test -Dwith-postgresql -Ptomcat
+  - ./gradlew test
 
-addons:
-  postgresql: "9.4"
+# Define any additional services or setup steps required
+services:
+  - mysql  # If your tests require a MySQL database, for example
 
-cache:
-  directories:
-    - $HOME/.m2
+# Optionally, you can specify the branches you want to build
+branches:
+  only:
+    - main  # Build only the 'main' branch
