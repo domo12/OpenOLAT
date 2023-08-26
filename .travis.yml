@@ -2,7 +2,7 @@ language: java
 
 # Choose the Java versions you want to test against
 jdk:
-  - openjdk17
+  - openjdk11
 
 # Specify the operating system you want to test on
 os: linux
@@ -19,13 +19,16 @@ install:
 script:
   - ./gradlew test
 
-# Define any additional services or setup steps required
-services:
-  - mysql  # If your tests require a MySQL database, for example
-
 # Optionally, you can specify the branches you want to build
 branches:
   only:
     - main  # Build only the 'main' branch
+    - develop  # Build the 'develop' branch as well, if applicable
+
+# Cache Gradle dependencies to speed up builds
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 # Notifications, deployment, and other configurations can be added here
