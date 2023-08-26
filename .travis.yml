@@ -2,7 +2,7 @@ language: java
 
 # Choose the Java versions you want to test against
 jdk:
-  - openjdk17
+  - openjdk11
 
 # Specify the operating system you want to test on
 os: linux
