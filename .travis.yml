@@ -1,0 +1,29 @@
+language: java
+
+# Choose the Java versions you want to test against
+jdk:
+  - openjdk11
+
+# Specify the operating system you want to test on
+os: linux
+
+# Build script or commands to run before installing dependencies
+before_install:
+  - chmod +x gradlew  # Make gradlew script executable
+
+# Install any dependencies or tools required for the build
+install:
+  - ./gradlew assemble
+
+# Run tests
+script:
+  - ./gradlew test
+
+# Define any additional services or setup steps required
+services:
+  - mysql  # If your tests require a MySQL database, for example
+
+# Optionally, you can specify the branches you want to build
+branches:
+  only:
+    - main  # Build only the 'main' branch
